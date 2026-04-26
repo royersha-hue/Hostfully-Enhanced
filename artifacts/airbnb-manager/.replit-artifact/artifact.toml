@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/"
+title = "StayFlow – Airbnb Manager"
+version = "1.0.0"
+id = "artifacts/airbnb-manager"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/" ]
+localPort = 18807
+
+[services.development]
+run = "pnpm --filter @workspace/airbnb-manager run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/airbnb-manager", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/airbnb-manager", "run", "serve" ]
+
+[services.env]
+PORT = "18807"
+BASE_PATH = "/"
