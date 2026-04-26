@@ -157,3 +157,39 @@ overrides:
   # drizzle-kit uses esbuild internally on an older version that's vulnerable, this overrides it
   "@esbuild-kit/esm-loader": "npm:tsx@^4.21.0"
   esbuild: "0.27.3"
+
+  # ============================================================================
+  # SECURITY OVERRIDES — pin transitive deps to patched versions
+  # ============================================================================
+
+  # picomatch: ReDoS via extglob quantifiers (GHSA-c2c7-rcm5-vvqj, GHSA-3v7f-55p6-f55p)
+  # 2.x path: @expo/cli>metro>jest-worker>jest-util>picomatch
+  "picomatch@<2.3.2": "2.3.2"
+  # 4.x path: @expo/cli>@expo/config>sucrase>tinyglobby>picomatch
+  "picomatch@>=4.0.0 <4.0.4": "4.0.4"
+
+  # path-to-regexp: ReDoS via sequential optional groups / multiple wildcards
+  # (GHSA-j3q9-mxjg-w52f, GHSA-27v5-c462-wpq7)
+  # path: api-server>express>router>path-to-regexp
+  "path-to-regexp@>=8.0.0 <8.4.0": "8.4.2"
+
+  # lodash: code injection via _.template + prototype pollution
+  # (GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh)
+  # path: mockup-sandbox>recharts>lodash
+  "lodash@<=4.17.23": "4.18.1"
+
+  # yaml: stack overflow via deeply nested YAML collections (GHSA-48c2-rrv3-qjmp)
+  # path: @expo/cli>@expo/metro>metro-config>yaml
+  "yaml@>=2.0.0 <2.8.3": "2.8.3"
+
+  # brace-expansion: zero-step sequence causes process hang (GHSA-f886-m6hf-6m8v)
+  # path: @expo/cli>minimatch>brace-expansion
+  "brace-expansion@>=2.0.0 <2.0.3": "2.1.0"
+
+  # postcss: XSS via unescaped </style> in CSS stringify (GHSA-qx2v-qp2m-jg93)
+  # paths: mockup-sandbox>vite>postcss, @expo/cli>@expo/metro-config>postcss
+  "postcss@<8.5.10": "8.5.10"
+
+  # uuid: missing buffer bounds check in v3/v5/v6 (GHSA-w5hq-g745-h8pq)
+  # paths: @expo/config-plugins>xcode>uuid, @expo/ngrok>uuid
+  "uuid@<14.0.0": "14.0.0"
