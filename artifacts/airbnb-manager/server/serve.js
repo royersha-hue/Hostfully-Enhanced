@@ -65,12 +65,28 @@ function serveManifest(platform, res) {
   res.end(manifest);
 }
 
+/**
+ * Returns true only if `host` is a safe hostname[:port] string that can be
+ * embedded into HTML attributes and JS string literals without escaping.
+ * Rejects anything containing characters that could break out of those
+ * contexts (quotes, angle brackets, semicolons, spaces, etc.).
+ */
+function isValidHost(host) {
+  if (!host || typeof host !== "string") return false;
+  // Allow: letters, digits, hyphens, dots, and an optional :port suffix.
+  // Explicitly rejects brackets, quotes, semicolons, slashes, and whitespace.
+  return /^[a-zA-Z0-9][a-zA-Z0-9\-.]*(:\d{1,5})?$/.test(host);
+}
+
 function serveLandingPage(req, res, landingPageTemplate, appName) {
-  const forwardedProto = req.headers["x-forwarded-proto"];
-  const protocol = forwardedProto || "https";
-  const host = req.headers["x-forwarded-host"] || req.headers["host"];
-  const baseUrl = `${protocol}://${host}`;
-  const expsUrl = `${host}`;
+  // Never trust X-Forwarded-Host — it is fully attacker-controlled and was
+  // previously reflected verbatim into HTML/JS (XSS / deep-link poisoning).
+  // Use only the Host header, validated against a strict allow-list pattern.
+  const rawHost = req.headers["host"];
+  const host = isValidHost(rawHost) ? rawHost : "localhost";
+
+  const baseUrl = `https://${host}`;
+  const expsUrl = host;
 
   const html = landingPageTemplate
     .replace(/BASE_URL_PLACEHOLDER/g, baseUrl)
@@ -108,7 +124,16 @@ const landingPageTemplate = fs.readFileSync(TEMPLATE_PATH, "utf-8");
 const appName = getAppName();
 
 const server = http.createServer((req, res) => {
-  const url = new URL(req.url || "/", `http://${req.headers.host}`);
+  // Guard against malformed Host headers: new URL() throws TypeError for
+  // invalid bases (e.g. Host: "["), which previously crashed the process.
+  let url;
+  try {
+    url = new URL(req.url || "/", `http://${req.headers.host}`);
+  } catch {
+    res.writeHead(400, { "content-type": "text/plain" });
+    res.end("Bad Request");
+    return;
+  }
   let pathname = url.pathname;
 
   if (basePath && pathname.startsWith(basePath)) {
