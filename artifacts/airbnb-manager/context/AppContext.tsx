@@ -1,5 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useCallback, useContext, useState } from "react";
 
 import type { Booking, Conversation, Guest, Message, Property } from "@/types";
 import {
@@ -38,29 +37,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [messages, setMessages] = useState<Record<string, Message[]>>(MESSAGES);
   const [quickReplies] = useState<string[]>(QUICK_REPLIES);
 
-  useEffect(() => {
-    loadPersistedMessages();
-  }, []);
-
-  const loadPersistedMessages = async () => {
-    try {
-      const stored = await AsyncStorage.getItem("messages");
-      if (stored) {
-        setMessages(JSON.parse(stored));
-      }
-      const storedConvs = await AsyncStorage.getItem("conversations");
-      if (storedConvs) {
-        setConversations(JSON.parse(storedConvs));
-      }
-    } catch {
-      // use defaults
-    }
-  };
-
   const totalUnread = conversations.reduce((sum, c) => sum + c.unreadCount, 0);
 
   const sendMessage = useCallback(
-    async (conversationId: string, text: string) => {
+    (conversationId: string, text: string) => {
       const newMsg: Message = {
         id: `msg_${Date.now()}`,
         bookingId: "",
@@ -79,7 +59,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         [conversationId]: [...(messages[conversationId] ?? []), newMsg],
       };
       setMessages(updatedMessages);
-      await AsyncStorage.setItem("messages", JSON.stringify(updatedMessages));
 
       const updatedConvs = conversations.map((c) =>
         c.id === conversationId
@@ -87,25 +66,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           : c
       );
       setConversations(updatedConvs);
-      await AsyncStorage.setItem("conversations", JSON.stringify(updatedConvs));
     },
     [messages, conversations]
   );
 
   const markConversationRead = useCallback(
-    async (conversationId: string) => {
+    (conversationId: string) => {
       const updatedConvs = conversations.map((c) =>
         c.id === conversationId ? { ...c, unreadCount: 0 } : c
       );
       setConversations(updatedConvs);
-      await AsyncStorage.setItem("conversations", JSON.stringify(updatedConvs));
 
       const updatedMessages = {
         ...messages,
         [conversationId]: (messages[conversationId] ?? []).map((m) => ({ ...m, isRead: true })),
       };
       setMessages(updatedMessages);
-      await AsyncStorage.setItem("messages", JSON.stringify(updatedMessages));
     },
     [conversations, messages]
   );
