@@ -1,10 +1,38 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>APP_NAME_PLACEHOLDER</title>
+    <title>StayFlow – Airbnb &amp; Short-Term Rental Host Manager</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='180' height='180' rx='36' fill='%23FF3C00'/%3E%3C/svg%3E" />
+    <meta
+      name="description"
+      content="StayFlow is a mobile app for Airbnb and short-term rental hosts. Track bookings, message guests, view revenue analytics, and manage your entire rental portfolio from one dashboard."
+    />
+    <link rel="canonical" href="BASE_URL_PLACEHOLDER/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="StayFlow" />
+    <meta property="og:title" content="StayFlow – Airbnb &amp; Short-Term Rental Host Manager" />
+    <meta
+      property="og:description"
+      content="StayFlow is a mobile app for Airbnb and short-term rental hosts. Track bookings, message guests, view revenue analytics, and manage your entire rental portfolio from one dashboard."
+    />
+    <meta property="og:url" content="BASE_URL_PLACEHOLDER/" />
+    <meta property="og:image" content="BASE_URL_PLACEHOLDER/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="StayFlow – Airbnb &amp; Short-Term Rental Host Manager" />
+    <meta
+      name="twitter:description"
+      content="StayFlow is a mobile app for Airbnb and short-term rental hosts. Track bookings, message guests, view revenue analytics, and manage your entire rental portfolio from one dashboard."
+    />
+    <meta name="twitter:image" content="BASE_URL_PLACEHOLDER/og-image.svg" />
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='180' height='180' rx='36' fill='%23e8735a'/%3E%3Ctext x='90' y='125' font-family='sans-serif' font-size='100' font-weight='700' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
     <style>
       * {
         box-sizing: border-box;
@@ -25,15 +53,58 @@
       }
       h1 {
         font-size: 26px;
-        font-weight: 600;
-        margin: 0;
+        font-weight: 700;
+        margin: 0 0 10px;
         color: #111;
+        letter-spacing: -0.5px;
       }
-      .subtitle {
+      .tagline {
+        font-size: 16px;
+        color: #e8735a;
+        font-weight: 600;
+        margin: 0 0 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .intro {
         font-size: 15px;
+        color: #555;
+        margin: 0 0 28px;
+        line-height: 1.7;
+      }
+      .features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 36px;
+        text-align: left;
+      }
+      .feature {
+        background: #f7f6f3;
+        border-radius: 10px;
+        padding: 14px 16px;
+      }
+      .feature-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #2d4a6e;
+        margin: 0 0 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      .feature-desc {
+        font-size: 12px;
         color: #666;
-        margin-top: 8px;
-        margin-bottom: 32px;
+        margin: 0;
+        line-height: 1.5;
+      }
+      .section-label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #999;
+        margin: 0 0 20px;
       }
       .loading {
         display: none;
@@ -206,20 +277,31 @@
       @media (min-width: 768px) {
         body {
           padding: 48px 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
         .wrapper {
           max-width: 720px;
         }
         h1 {
-          font-size: 32px;
-          margin-bottom: 10px;
+          font-size: 36px;
+          margin-bottom: 12px;
         }
-        .subtitle {
-          font-size: 16px;
-          margin-bottom: 40px;
+        .intro {
+          font-size: 17px;
+          margin-bottom: 32px;
+        }
+        .features {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 14px;
+          margin-bottom: 44px;
+        }
+        .feature {
+          padding: 18px 20px;
+        }
+        .feature-title {
+          font-size: 14px;
+        }
+        .feature-desc {
+          font-size: 13px;
         }
         .steps-container {
           flex-direction: row;
@@ -251,7 +333,7 @@
           max-width: 800px;
         }
         h1 {
-          font-size: 36px;
+          font-size: 42px;
         }
         .steps-container {
           gap: 28px;
@@ -270,8 +352,14 @@
         h1 {
           color: #f5f5f5;
         }
-        .subtitle {
-          color: #999;
+        .intro {
+          color: #888;
+        }
+        .feature {
+          background: #1a1a1a;
+        }
+        .feature-desc {
+          color: #777;
         }
         .spinner {
           border-color: #444;
@@ -337,8 +425,42 @@
       </div>
 
       <div class="content" id="content">
-        <h1>APP_NAME_PLACEHOLDER</h1>
-        <p class="subtitle">Preview this app on your phone</p>
+        <p class="tagline">Short-Term Rental Management</p>
+        <h1>Run your Airbnb hosting business from one app</h1>
+        <p class="intro">
+          StayFlow is a mobile dashboard for Airbnb hosts and short-term rental
+          operators. Track upcoming stays, message guests, monitor revenue, and
+          manage your entire property portfolio — all from your phone.
+        </p>
+
+        <div class="features">
+          <div class="feature">
+            <p class="feature-title">Dashboard</p>
+            <p class="feature-desc">Revenue overview, upcoming stays, and unread message alerts at a glance.</p>
+          </div>
+          <div class="feature">
+            <p class="feature-title">Messages</p>
+            <p class="feature-desc">Guest inbox with quick-reply templates so you respond in seconds.</p>
+          </div>
+          <div class="feature">
+            <p class="feature-title">Calendar</p>
+            <p class="feature-desc">Monthly booking calendar — tap any date to see who's staying.</p>
+          </div>
+          <div class="feature">
+            <p class="feature-title">Guests</p>
+            <p class="feature-desc">CRM with full stay history, spending totals, and contact details.</p>
+          </div>
+          <div class="feature">
+            <p class="feature-title">Analytics</p>
+            <p class="feature-desc">Revenue by period, platform breakdown, and per-property performance.</p>
+          </div>
+          <div class="feature">
+            <p class="feature-title">Multi-property</p>
+            <p class="feature-desc">Manage an entire portfolio of vacation rentals from a single login.</p>
+          </div>
+        </div>
+
+        <p class="section-label">Try it on your phone</p>
 
         <div class="steps-container">
           <div class="step">

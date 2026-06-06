@@ -1,0 +1,53 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#f7f6f3"/>
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+
+  <defs>
+    <linearGradient id="bg-grad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f7f6f3"/>
+      <stop offset="100%" stop-color="#ede9e0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Logo mark -->
+  <rect x="80" y="80" width="72" height="72" rx="18" fill="#e8735a"/>
+  <text x="116" y="132" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="40" font-weight="700" fill="#fff" text-anchor="middle">S</text>
+
+  <!-- App name -->
+  <text x="80" y="222" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="56" font-weight="700" fill="#111">StayFlow</text>
+
+  <!-- Tagline -->
+  <text x="80" y="285" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="28" font-weight="400" fill="#555">Airbnb &amp; Short-Term Rental Host Manager</text>
+
+  <!-- Divider -->
+  <rect x="80" y="318" width="80" height="4" rx="2" fill="#e8735a"/>
+
+  <!-- Feature pills -->
+  <!-- Dashboard -->
+  <rect x="80" y="358" width="170" height="44" rx="22" fill="#2d4a6e"/>
+  <text x="165" y="386" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="500" fill="#fff" text-anchor="middle">Dashboard</text>
+
+  <!-- Messages -->
+  <rect x="264" y="358" width="170" height="44" rx="22" fill="#2d4a6e"/>
+  <text x="349" y="386" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="500" fill="#fff" text-anchor="middle">Messages</text>
+
+  <!-- Calendar -->
+  <rect x="448" y="358" width="160" height="44" rx="22" fill="#2d4a6e"/>
+  <text x="528" y="386" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="500" fill="#fff" text-anchor="middle">Calendar</text>
+
+  <!-- Guests -->
+  <rect x="622" y="358" width="148" height="44" rx="22" fill="#e8735a"/>
+  <text x="696" y="386" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="500" fill="#fff" text-anchor="middle">Guests</text>
+
+  <!-- Analytics -->
+  <rect x="784" y="358" width="168" height="44" rx="22" fill="#e8735a"/>
+  <text x="868" y="386" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="500" fill="#fff" text-anchor="middle">Analytics</text>
+
+  <!-- Bottom copy -->
+  <text x="80" y="470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="22" font-weight="400" fill="#888">Manage bookings, guests, revenue, and messages</text>
+  <text x="80" y="502" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="22" font-weight="400" fill="#888">from one mobile app — built for busy hosts.</text>
+
+  <!-- Phone illustration hint (right side) -->
+  <rect x="980" y="60" width="160" height="290" rx="24" fill="#2d4a6e" opacity="0.12"/>
+  <rect x="996" y="80" width="128" height="250" rx="16" fill="#2d4a6e" opacity="0.10"/>
+</svg>

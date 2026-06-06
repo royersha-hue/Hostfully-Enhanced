@@ -15,6 +15,7 @@ const path = require("path");
 
 const STATIC_ROOT = path.resolve(__dirname, "..", "static-build");
 const TEMPLATE_PATH = path.resolve(__dirname, "templates", "landing-page.html");
+const ASSETS_ROOT = path.resolve(__dirname, "assets");
 const basePath = (process.env.BASE_PATH || "/").replace(/\/+$/, "");
 
 const MIME_TYPES = {
@@ -162,6 +163,29 @@ function serveLlmsTxt(req, res) {
   res.end(body);
 }
 
+function serveServerAsset(assetName, res) {
+  const safeName = path.basename(assetName);
+  const filePath = path.join(ASSETS_ROOT, safeName);
+
+  if (!filePath.startsWith(ASSETS_ROOT)) {
+    res.writeHead(403);
+    res.end("Forbidden");
+    return;
+  }
+
+  if (!fs.existsSync(filePath)) {
+    res.writeHead(404);
+    res.end("Not Found");
+    return;
+  }
+
+  const ext = path.extname(filePath).toLowerCase();
+  const contentType = MIME_TYPES[ext] || "application/octet-stream";
+  const content = fs.readFileSync(filePath);
+  res.writeHead(200, { "content-type": contentType });
+  res.end(content);
+}
+
 function serveStaticFile(urlPath, res) {
   const safePath = path.normalize(urlPath).replace(/^(\.\.(\/|\\|$))+/, "");
   const filePath = path.join(STATIC_ROOT, safePath);
@@ -215,6 +239,10 @@ const server = http.createServer((req, res) => {
 
   if (pathname === "/llms.txt") {
     return serveLlmsTxt(req, res);
+  }
+
+  if (pathname === "/og-image.svg") {
+    return serveServerAsset("og-image.svg", res);
   }
 
   if (pathname === "/" || pathname === "/manifest") {
