@@ -1,0 +1,1 @@
+- [Expo SEO surface heuristic](expo-seo-surface-heuristic.md) — For Expo/React Native repos, inspect custom landing-page servers first because mobile routes often are not the deployable crawl surface.
