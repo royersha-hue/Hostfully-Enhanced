@@ -97,6 +97,71 @@ function serveLandingPage(req, res, landingPageTemplate, appName) {
   res.end(html);
 }
 
+function getCanonicalBase(req) {
+  const rawHost = req.headers["host"];
+  const host = isValidHost(rawHost) ? rawHost : "localhost";
+  return `https://${host}`;
+}
+
+function serveRobotsTxt(req, res) {
+  const base = getCanonicalBase(req);
+  const body = [
+    "User-agent: *",
+    "Allow: /",
+    "",
+    `Sitemap: ${base}/sitemap.xml`,
+    "",
+  ].join("\n");
+  res.writeHead(200, { "content-type": "text/plain; charset=utf-8" });
+  res.end(body);
+}
+
+function serveSitemapXml(req, res) {
+  const base = getCanonicalBase(req);
+  const today = new Date().toISOString().slice(0, 10);
+  const body = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    "  <url>",
+    `    <loc>${base}/</loc>`,
+    `    <lastmod>${today}</lastmod>`,
+    "    <changefreq>monthly</changefreq>",
+    "    <priority>1.0</priority>",
+    "  </url>",
+    "</urlset>",
+    "",
+  ].join("\n");
+  res.writeHead(200, { "content-type": "application/xml; charset=utf-8" });
+  res.end(body);
+}
+
+function serveLlmsTxt(req, res) {
+  const base = getCanonicalBase(req);
+  const body = [
+    "# StayFlow",
+    "",
+    "> StayFlow is a mobile app for Airbnb and short-term rental hosts.",
+    "",
+    "StayFlow helps property managers track bookings, communicate with guests,",
+    "view analytics, and manage their rental portfolio from a single dashboard.",
+    "",
+    "## Key capabilities",
+    "",
+    "- Dashboard with revenue overview and upcoming stays",
+    "- Guest messaging with quick-reply templates",
+    "- Monthly booking calendar",
+    "- Guest CRM with stay history",
+    "- Revenue and platform analytics",
+    "",
+    "## Links",
+    "",
+    `- Home: ${base}/`,
+    "",
+  ].join("\n");
+  res.writeHead(200, { "content-type": "text/plain; charset=utf-8" });
+  res.end(body);
+}
+
 function serveStaticFile(urlPath, res) {
   const safePath = path.normalize(urlPath).replace(/^(\.\.(\/|\\|$))+/, "");
   const filePath = path.join(STATIC_ROOT, safePath);
@@ -138,6 +203,18 @@ const server = http.createServer((req, res) => {
 
   if (basePath && pathname.startsWith(basePath)) {
     pathname = pathname.slice(basePath.length) || "/";
+  }
+
+  if (pathname === "/robots.txt") {
+    return serveRobotsTxt(req, res);
+  }
+
+  if (pathname === "/sitemap.xml") {
+    return serveSitemapXml(req, res);
+  }
+
+  if (pathname === "/llms.txt") {
+    return serveLlmsTxt(req, res);
   }
 
   if (pathname === "/" || pathname === "/manifest") {
