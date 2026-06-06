@@ -20,7 +20,7 @@ run = "pnpm --filter @workspace/airbnb-manager run dev"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/airbnb-manager", "run", "build" ]
-run = [ "pnpm", "--filter", "@workspace/airbnb-manager", "run", "serve" ]
+run = [ "node", "artifacts/airbnb-manager/server/serve.js" ]
 
 [services.env]
 PORT = "18807"
