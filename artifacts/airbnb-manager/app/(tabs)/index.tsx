@@ -108,6 +108,21 @@ export default function DashboardScreen() {
         <MiniBarChart data={monthlyStats} highlightColor={colors.primary} />
       </View>
 
+      <TouchableOpacity
+        style={[styles.upgradeBanner, { backgroundColor: colors.accent }]}
+        activeOpacity={0.88}
+        onPress={() => router.push("/subscription")}
+      >
+        <View style={styles.upgradeLeft}>
+          <Feather name="star" size={18} color="#fff" />
+          <View>
+            <Text style={styles.upgradeTitle}>Upgrade to Pro</Text>
+            <Text style={styles.upgradeSubtitle}>Unlock unlimited properties & analytics</Text>
+          </View>
+        </View>
+        <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
+      </TouchableOpacity>
+
       <View style={styles.sectionHeader}>
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Upcoming Stays</Text>
         <TouchableOpacity onPress={() => router.push("/(tabs)/calendar")}>
@@ -268,4 +283,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter_700Bold",
   },
+  upgradeBanner: {
+    borderRadius: 14,
+    padding: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  upgradeLeft: { flexDirection: "row", alignItems: "center", gap: 12 },
+  upgradeTitle: { color: "#fff", fontSize: 15, fontFamily: "Inter_600SemiBold" },
+  upgradeSubtitle: { color: "rgba(255,255,255,0.8)", fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 1 },
 });
