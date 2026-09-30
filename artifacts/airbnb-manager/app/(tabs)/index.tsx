@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useClerk, useUser } from "@clerk/expo";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
@@ -20,6 +21,8 @@ import { MiniBarChart } from "@/components/MiniBarChart";
 export default function DashboardScreen() {
   const colors = useColors();
   const router = useRouter();
+  const { signOut } = useClerk();
+  const { user } = useUser();
   const insets = useSafeAreaInsets();
   const { bookings, conversations, monthlyStats, totalUnread, properties } = useApp();
 
@@ -57,9 +60,21 @@ export default function DashboardScreen() {
     >
       <View style={styles.header}>
         <View>
-          <Text style={[styles.greeting, { color: colors.mutedForeground }]}>Good morning</Text>
+          <Text style={[styles.greeting, { color: colors.mutedForeground }]}>
+            {user?.firstName ? `Welcome, ${user.firstName}` : "Welcome back"}
+          </Text>
           <Text style={[styles.title, { color: colors.foreground }]}>Dashboard</Text>
         </View>
+        <View style={styles.headerActions}>
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel="Sign out"
+            testID="sign-out"
+            style={[styles.notifBtn, { backgroundColor: colors.secondary }]}
+            onPress={() => signOut()}
+          >
+            <Feather name="log-out" size={18} color={colors.foreground} />
+          </TouchableOpacity>
         {totalUnread > 0 && (
           <TouchableOpacity
             style={[styles.notifBtn, { backgroundColor: colors.primary }]}
@@ -69,6 +84,14 @@ export default function DashboardScreen() {
             <Text style={styles.notifCount}>{totalUnread}</Text>
           </TouchableOpacity>
         )}
+        </View>
+      </View>
+
+      <View style={[styles.sampleNotice, { backgroundColor: colors.secondary }]}>
+        <Feather name="info" size={16} color={colors.accent} />
+        <Text style={[styles.sampleNoticeText, { color: colors.accent }]}>
+          Sample workspace — stays and guests shown here are demo data.
+        </Text>
       </View>
 
       <View style={styles.statsRow}>
@@ -218,6 +241,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 4,
   },
+  headerActions: { flexDirection: "row", alignItems: "center", gap: 8 },
+  sampleNotice: { flexDirection: "row", alignItems: "center", gap: 9, borderRadius: 12, padding: 12 },
+  sampleNoticeText: { flex: 1, fontFamily: "Inter_500Medium", fontSize: 12, lineHeight: 18 },
   greeting: { fontSize: 14, fontFamily: "Inter_400Regular" },
   title: { fontSize: 28, fontFamily: "Inter_700Bold", letterSpacing: -0.5 },
   notifBtn: {

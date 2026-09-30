@@ -2,7 +2,7 @@
 
 ## Overview
 
-A full-featured mobile app for Airbnb / short-term rental hosts. Built with Expo + React Native. Uses AsyncStorage for persistence (no backend required on first build).
+A mobile app for Airbnb / short-term rental hosts. Built with Expo + React Native. Sign-in is managed by Clerk. The dashboard currently displays shared sample records; edits are held in memory for the current signed-in session, not saved to a personal account.
 
 ## App Name
 
