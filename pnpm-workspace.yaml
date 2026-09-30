@@ -193,3 +193,19 @@ overrides:
   # uuid: missing buffer bounds check in v3/v5/v6 (GHSA-w5hq-g745-h8pq)
   # paths: @expo/config-plugins>xcode>uuid, @expo/ngrok>uuid
   "uuid@<14.0.0": "14.0.0"
+
+  # fast-uri: URI parsing vulnerabilities (GHSA-q3j6-qgpj-74h6, GHSA-v39h-62p7-jpjc)
+  # path: ajv>fast-uri; retain the compatible 3.x major
+  "fast-uri@>=3.0.0 <3.1.8": "3.1.8"
+
+  # ws: WebSocket denial of service (GHSA-58qx-3vcg-4xpx)
+  # paths: @expo/cli>ws, stripe-replit-sync>ws
+  "ws@>=8.0.0 <8.22.0": "8.22.0"
+
+  # brace-expansion: vulnerable expansion handling (GHSA-jxxr-4gwj-5jf2)
+  # path: glob>minimatch>brace-expansion; retain the compatible 5.x major
+  "brace-expansion@>=5.0.0 <5.0.12": "5.0.12"
+
+  # qs: query parsing vulnerability (GHSA-q8mj-m7cp-5q26)
+  # paths: express>qs, express>body-parser>qs
+  "qs@>=6.0.0 <6.16.0": "6.16.0"
