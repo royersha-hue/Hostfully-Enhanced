@@ -28,9 +28,13 @@ async function getStripeCredentials(): Promise<{ secretKey: string }> {
   }
 
   const data = await resp.json();
-  const settings = data.items?.[0]?.settings;
+  const items = typeof data === "object" && data !== null && "items" in data
+    && Array.isArray(data.items) ? data.items : [];
+  const settings: unknown = items[0]?.settings;
 
-  if (!settings?.secret_key) {
+  if (typeof settings !== "object" || settings === null ||
+    !("secret_key" in settings) || typeof settings.secret_key !== "string" ||
+    !settings.secret_key) {
     throw new Error(
       'Stripe integration not connected or missing secret key. ' +
       'Connect Stripe via the Integrations tab first.'
